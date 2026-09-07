@@ -7,4 +7,4 @@ ENV OPENCLAW_TSDOWN_MAX_OLD_SPACE_MB=4096
 RUN corepack enable && pnpm install && pnpm build
 ENV PORT=8080
 EXPOSE 8080
-CMD ["node", "openclaw.mjs", "--non-interactive"]
+CMD ["node", "openclaw.mjs", "--non-interactive", "--accept-risk"]
