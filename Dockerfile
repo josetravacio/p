@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:24-alpine
 WORKDIR /app
 RUN apk add --no-cache git
 RUN git clone --depth 1 https://github.com/openclaw/openclaw.git .
