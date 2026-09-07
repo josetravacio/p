@@ -2,7 +2,7 @@ FROM node:20-alpine
 WORKDIR /app
 RUN apk add --no-cache git
 RUN git clone --depth 1 https://github.com/openclaw/openclaw.git .
-RUN npm install --omit=dev
+RUN corepack enable && pnpm install --prod
 ENV PORT=8080
 EXPOSE 8080
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
