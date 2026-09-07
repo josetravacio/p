@@ -11,4 +11,4 @@ ENV PORT=8080
 RUN corepack enable && pnpm install && pnpm build
 
 EXPOSE 8080
-CMD ["sh", "-c", "node openclaw.mjs onboard --non-interactive --accept-risk --skip-health && node openclaw.mjs gateway run --port ${PORT:-8080} --bind 0.0.0.0"]
+CMD ["sh", "-c", "node openclaw.mjs onboard --non-interactive --accept-risk --skip-health && node openclaw.mjs gateway run --port ${PORT:-8080} --bind lan"]
