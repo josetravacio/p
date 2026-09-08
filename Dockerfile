@@ -1,11 +1,26 @@
-FROM node:24-slim
+FROM node:20-slim
+
+# Dependencias de sistema básicas
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    sqlite3 \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
-RUN apt-get update && apt-get install -y git python3 build-essential && rm -rf /var/lib/apt/lists/*
-RUN git clone --depth 1 https://github.com/openclaw/openclaw.git .
 
-ENV OPENCLAW_TSDOWN_MAX_OLD_SPACE_MB=4096
+# Instalar dependencias de producción
+COPY package*.json ./
+RUN npm ci --omit=dev
 
-RUN corepack enable && pnpm install && pnpm build
+# Copiar código fuente
+COPY . .
+
+# Variables de entorno para control de memoria en Render
+ENV OPENCLAW_DISABLED_PLUGINS="browser,canvas,cua-computer,google-meet,teams-meetings,zoom-meetings"
+ENV NODE_OPTIONS="--max-old-space-size=350"
+ENV NODE_ENV="production"
+ENV PORT=8080
 
 EXPOSE 8080
-CMD ["sh", "-c", "node openclaw.mjs gateway run --port ${PORT:-8080} --host 0.0.0.0 --token \"$OPENCLAW_GATEWAY_TOKEN\" --allow-unconfigured"]
+
+CMD ["npm", "start"]
