@@ -9,8 +9,9 @@ ENV HOST=0.0.0.0
 ENV PORT=8080
 ENV GATEWAY_TOKEN="clave_secreta_openclaw_2026"
 ENV OPENCLAW_GATEWAY_TOKEN="clave_secreta_openclaw_2026"
+ENV OPENCLAW_ALLOW_UNAUTHENTICATED=true
 
 RUN corepack enable && pnpm install && pnpm build
 
 EXPOSE 8080
-CMD ["sh", "-c", "NODE_OPTIONS='--max-old-space-size=512' node openclaw.mjs onboard --non-interactive --accept-risk --skip-health && node openclaw.mjs config set gateway.trustedProxies '[\"127.0.0.1\", \"10.0.0.0/8\", \"172.16.0.0/12\", \"100.64.0.0/10\"]' && node openclaw.mjs config set gateway.controlUi.allowedOrigins '[\"https://openclaw-app-jpoh.onrender.com\", \"http://localhost:8080\"]' && (sleep 10 && node openclaw.mjs gateway approve bbc3ec99-169a-4c68-ac69-c65f843dc1c0 2>/dev/null) & NODE_OPTIONS='--max-old-space-size=512' node openclaw.mjs gateway run --port ${PORT:-8080} --bind lan --allow-unconfigured --token \"${GATEWAY_TOKEN}\""]
+CMD ["sh", "-c", "NODE_OPTIONS='--max-old-space-size=512' node openclaw.mjs onboard --non-interactive --accept-risk --skip-health && node openclaw.mjs config set gateway.trustedProxies '[\"127.0.0.1\", \"10.0.0.0/8\", \"172.16.0.0/12\", \"100.64.0.0/10\"]' && node openclaw.mjs config set gateway.controlUi.allowedOrigins '[\"https://openclaw-app-jpoh.onrender.com\", \"http://localhost:8080\"]' && NODE_OPTIONS='--max-old-space-size=512' node openclaw.mjs gateway run --port ${PORT:-8080} --bind lan --allow-unconfigured --token \"${GATEWAY_TOKEN}\""]
