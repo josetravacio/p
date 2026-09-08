@@ -1,6 +1,5 @@
 FROM node:20-slim
 
-# Dependencias de sistema básicas
 RUN apt-get update && apt-get install -y --no-install-recommends \
     sqlite3 \
     ca-certificates \
@@ -8,14 +7,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-# Instalar dependencias de producción
 COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
 
-# Copiar código fuente
 COPY . .
 
-# Variables de entorno para control de memoria en Render
 ENV OPENCLAW_DISABLED_PLUGINS="browser,canvas,cua-computer,google-meet,teams-meetings,zoom-meetings"
 ENV NODE_OPTIONS="--max-old-space-size=350"
 ENV NODE_ENV="production"
