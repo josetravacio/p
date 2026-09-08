@@ -11,7 +11,7 @@ RUN corepack enable
 
 COPY . .
 
-RUN pnpm install
+RUN pnpm install && pnpm -r --if-present build
 
 ENV OPENCLAW_DISABLED_PLUGINS="browser,canvas,cua-computer,google-meet,teams-meetings,zoom-meetings"
 ENV NODE_OPTIONS="--max-old-space-size=350"
