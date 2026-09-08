@@ -7,10 +7,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install --omit=dev
+RUN corepack enable
 
 COPY . .
+
+RUN pnpm install && pnpm build
 
 ENV OPENCLAW_DISABLED_PLUGINS="browser,canvas,cua-computer,google-meet,teams-meetings,zoom-meetings"
 ENV NODE_OPTIONS="--max-old-space-size=350"
@@ -19,4 +20,4 @@ ENV PORT=8080
 
 EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]
