@@ -3,7 +3,7 @@ WORKDIR /app
 RUN apk add --no-cache git
 RUN git clone --depth 1 https://github.com/openclaw/openclaw.git .
 
-ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV NODE_OPTIONS="--max-old-space-size=512"
 ENV OPENCLAW_TSDOWN_MAX_OLD_SPACE_MB=4096
 ENV HOST=0.0.0.0
 ENV PORT=8080
