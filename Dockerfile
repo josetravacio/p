@@ -12,12 +12,12 @@ RUN git clone https://github.com/openclaw/openclaw.git .
 
 RUN corepack enable
 
-ENV OPENCLAW_TSDOWN_MAX_OLD_SPACE_MB=2048
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+ENV OPENCLAW_TSDOWN_MAX_OLD_SPACE_MB=3072
 
 RUN pnpm install && pnpm run --if-present build
 
 ENV OPENCLAW_DISABLED_PLUGINS="browser,canvas,cua-computer,google-meet,teams-meetings,zoom-meetings"
-ENV NODE_OPTIONS="--max-old-space-size=350"
 ENV NODE_ENV="production"
 ENV PORT=8080
 
