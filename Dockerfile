@@ -18,6 +18,7 @@ ENV OPENCLAW_TSDOWN_MAX_OLD_SPACE_MB=3072
 RUN pnpm install && pnpm run --if-present build
 
 ENV OPENCLAW_DISABLED_PLUGINS="browser,canvas,cua-computer,google-meet,teams-meetings,zoom-meetings"
+ENV OPENCLAW_TRUSTED_PROXIES="127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
 ENV NODE_ENV="production"
 ENV PORT=8080
 
